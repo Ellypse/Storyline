@@ -253,19 +253,19 @@ local function showQuestPortraitFrame(isOnCompleteStep)
 		return;
 	end
 
-	local questPortrait, questPortraitText, questPortraitName, questPortraitMount
+	local questPortrait, questPortraitText, questPortraitName, questPortraitMount, questPortraitModelSceneID
 
 	if isOnCompleteStep then
-		questPortrait, questPortraitText, questPortraitName, questPortraitMount = GetQuestPortraitTurnIn();
+		questPortrait, questPortraitText, questPortraitName, questPortraitMount, questPortraitModelSceneID  = GetQuestPortraitTurnIn();
 	else
-		questPortrait, questPortraitText, questPortraitName, questPortraitMount = GetQuestPortraitGiver();
+		questPortrait, questPortraitText, questPortraitName, questPortraitMount, questPortraitModelSceneID = GetQuestPortraitGiver();
 	end
 
 	if questPortrait and questPortrait ~= 0 then
 		-- HACK: add fix error, when questPortraitMount is nil
 		if (questPortraitMount == nil) then questPortraitMount = 0 end
-		QuestFrame_ShowQuestPortrait(Storyline_NPCFrame, questPortrait, questPortraitMount, questPortraitText, questPortraitName, -16, -48);
-		QuestModelScene:SetFrameStrata("LOW")
+		QuestFrame_ShowQuestPortrait(Storyline_NPCFrame, questPortrait, questPortraitMount, questPortraitModelSceneID, questPortraitText, questPortraitName, -16, -48);
+		QuestModelScene:SetFrameLevel(Storyline_NPCFrame:GetFrameLevel()+1);
 	else
 		QuestFrame_HideQuestPortrait();
 	end
